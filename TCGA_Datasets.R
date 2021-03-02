@@ -18,8 +18,8 @@ arguments = commandArgs(trailingOnly = TRUE)
 option_list <- list(
 make_option("--id", dest = "id"),
 make_option("--symbol", dest = "symbol"),
-make_option("--high", dest = "high"),
-make_option("--low", dest = "low"),
+make_option("--high", dest = "high", type="numeric"),
+make_option("--low", dest = "low", type="numeric"),
 make_option("--type", dest = "type"),
 make_option("--msigdb", dest = "msigdb")
 )
