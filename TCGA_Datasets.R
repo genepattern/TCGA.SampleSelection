@@ -30,10 +30,10 @@ opt <- parse_args(OptionParser(option_list = option_list), positional_arguments 
 tcgasamples = as.character(opt$id)
 symbol_query = as.character(opt$symbol)
 threshold_pos = as.numeric(opt$high)
-threshold_neg = (-1) * abs(as.numeric(opt$low)
+threshold_neg = (-1) * abs(as.numeric(opt$low))
 data.type = as.character(opt$type)
 msigdbversion = as.character(opt$msigdb)
-
+assay = "RNA_Seq_v2_mRNA_median_all_sample_Zscores" #linear_CNA could also work
 set.seed(147)
 
 cbiosamples <- paste0(tolower(tcgasamples), "_tcga")
@@ -117,7 +117,7 @@ mappeddata <- mappeddata %>% group_by(.data$Gene.Symbol) %>% summarise_all(sum) 
 
 cbiodata <- suppressMessages(suppressWarnings(cBioDataPack(cbiosamples, ask = FALSE)))
 assays <- assays(cbiodata)
-cbioassay <- assays$RNA_Seq_v2_mRNA_median_all_sample_Zscores
+cbioassay <- assays[[assay]]
 cbioassay <- as.data.frame(cbind(rownames(cbioassay), cbioassay), stringsAsFactors = FALSE)
 mappedcbioassay <- merge(x = symbolchip, y = cbioassay, by.x = 1, by.y = 1, all = FALSE, 
  no.dups = FALSE)
