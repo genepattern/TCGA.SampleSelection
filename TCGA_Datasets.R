@@ -13,7 +13,7 @@ suppressMessages(suppressWarnings(library("AnVIL")))
 # suppressMessages(suppressWarnings(install.packages('rapiclient', repos =
 # 'https://cloud.r-project.org/', quiet = TRUE))) library('rapiclient')
 
-args = commandArgs(trailingOnly = TRUE)
+arguments = commandArgs(trailingOnly = TRUE)
 
 option_list <- list(
 make_option("--id", dest = "id"),
