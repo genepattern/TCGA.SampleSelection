@@ -1,3 +1,10 @@
+suppressMessages(suppressWarnings(install.packages("getopt", repos = "https://cloud.r-project.org/", 
+ quiet = TRUE)))
+suppressMessages(suppressWarnings(install.packages("optparse", repos = "https://cloud.r-project.org/", 
+ quiet = TRUE)))
+suppressMessages(suppressWarnings(library("getopt")))
+suppressMessages(suppressWarnings(library("optparse")))
+
 suppressMessages(suppressWarnings(BiocManager::install("cBioPortalData", ask = FALSE, 
  quiet = TRUE)))
 suppressMessages(suppressWarnings(BiocManager::install("AnVIL", ask = FALSE, quiet = TRUE)))
@@ -8,12 +15,24 @@ suppressMessages(suppressWarnings(library("AnVIL")))
 
 args = commandArgs(trailingOnly = TRUE)
 
-tcgasamples = as.character(args[2])
-symbol_query = as.character(args[4])
-threshold_pos = as.numeric(args[6])
-threshold_neg = (-1) * abs(as.numeric(args[8]))
-data.type = as.character(args[10])
-msigdbversion = as.character(args[12])
+option_list <- list(
+make_option("--id", dest = "id"),
+make_option("--symbol", dest = "symbol"),
+make_option("--high", dest = "high"),
+make_option("--low", dest = "low"),
+make_option("--type", dest = "type"),
+make_option("--msigdb", dest = "msigdb")
+)
+
+opt <- parse_args(OptionParser(option_list = option_list), positional_arguments = TRUE, 
+ args = arguments)$options
+
+tcgasamples = as.character(opt$id)
+symbol_query = as.character(opt$symbol)
+threshold_pos = as.numeric(opt$high)
+threshold_neg = (-1) * abs(as.numeric(opt$low)
+data.type = as.character(opt$type)
+msigdbversion = as.character(opt$msigdb)
 
 set.seed(147)
 
