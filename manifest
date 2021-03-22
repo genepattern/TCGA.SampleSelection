@@ -81,7 +81,7 @@ p5_type=java.lang.String
 p5_value=scaled_estimate\=TPM;raw_count\=Raw Counts
 p6_MODE=
 p6_TYPE=TEXT
-p6_default_value=7.2
+p6_default_value=7.3
 p6_description=MSigDB version to use for Gene Symbol lookup.<br>\nThis version should match the version of the gene sets intended for all downstream analysis. 
 p6_fileFormat=
 p6_flag=--msigdb
