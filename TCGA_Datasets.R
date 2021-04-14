@@ -15,14 +15,10 @@ suppressMessages(suppressWarnings(library("AnVIL")))
 
 arguments = commandArgs(trailingOnly = TRUE)
 
-option_list <- list(
-make_option("--id", dest = "id"),
-make_option("--symbol", dest = "symbol"),
-make_option("--high", dest = "high", type="numeric"),
-make_option("--low", dest = "low", type="numeric"),
-make_option("--type", dest = "type"),
-make_option("--msigdb", dest = "msigdb")
-)
+option_list <- list(make_option("--id", dest = "id"), make_option("--symbol", dest = "symbol"), 
+ make_option("--high", dest = "high", type = "numeric"), make_option("--low", 
+  dest = "low", type = "numeric"), make_option("--type", dest = "type"), make_option("--msigdb", 
+  dest = "msigdb", default = "latest"))
 
 opt <- parse_args(OptionParser(option_list = option_list), positional_arguments = TRUE, 
  args = arguments)$options
@@ -33,7 +29,7 @@ threshold_pos = as.numeric(opt$high)
 threshold_neg = (-1) * abs(as.numeric(opt$low))
 data.type = as.character(opt$type)
 msigdbversion = as.character(opt$msigdb)
-assay = "RNA_Seq_v2_mRNA_median_all_sample_Zscores" #linear_CNA could also work
+assay = "RNA_Seq_v2_mRNA_median_all_sample_Zscores"  #linear_CNA could also work
 set.seed(147)
 
 cbiosamples <- paste0(tolower(tcgasamples), "_tcga")
@@ -44,14 +40,22 @@ dataset = paste0("http://gdac.broadinstitute.org/runs/stddata__2016_01_28/data/"
 output <- paste0(c("TCGA", tcgasamples, symbol_query, "HIGH_stdev_greater_than", 
  threshold_pos, "vs", "LOW_stdev_less_than_neg", abs(threshold_neg)), collapse = "_")
 
-if (as.numeric(msigdbversion) >= 7.2) {
+if (msigdbversion == "latest") {
+ versionquery <- readLines("https://software.broadinstitute.org/cancer/software/gsea/wiki/index.php/MSigDB_Latest_Release_Notes")
+ versionquery <- strsplit(versionquery[grep(pattern = "<title>", versionquery)], 
+  " ")
+ versionquery <- versionquery[[1]][grep(pattern = "v[0-9]\\.[0-9]", versionquery[[1]])]
+ symbolchip <- read.table(url(paste0("https://data.broadinstitute.org/gsea-msigdb/msigdb/annotations_versioned/Human_Gene_Symbol_with_Remapping_MSigDB.", 
+  versionquery, ".chip")), header = TRUE, stringsAsFactors = FALSE, sep = "\t", 
+  quote = "", fill = TRUE, na = "")
+} else if (as.numeric(msigdbversion) >= 7.2) {
  symbolchip <- read.table(url(paste0("https://data.broadinstitute.org/gsea-msigdb/msigdb/annotations_versioned/Human_Gene_Symbol_with_Remapping_MSigDB.v", 
   msigdbversion, ".chip")), header = TRUE, stringsAsFactors = FALSE, sep = "\t", 
-  quote = "", fill = TRUE)
+  quote = "", fill = TRUE, na = "")
 } else if (as.numeric(msigdbversion) == 7.1) {
  symbolchip <- read.table(url(paste0("https://data.broadinstitute.org/gsea-msigdb/msigdb/annotations_versioned/Human_Symbol_with_Remapping_MSigDB.v", 
   msigdbversion, ".chip")), header = TRUE, stringsAsFactors = FALSE, sep = "\t", 
-  quote = "", fill = TRUE)
+  quote = "", fill = TRUE, na = "")
 } else if (as.numeric(msigdbversion) < 7.1) {
  message(paste0("Error: MSigDB Version ", msigdbversion, " is not supported. Please try a newer version."))
  stop()
@@ -94,10 +98,15 @@ if (data.type == "scaled_estimate") {
 names(data) = data[c(1), ]
 data <- data[-c(1, 2), ]
 
-
-chip <- read.table(url(paste0("https://data.broadinstitute.org/gsea-msigdb/msigdb/annotations_versioned/Human_NCBI_Entrez_Gene_ID_MSigDB.v", 
- msigdbversion, ".chip")), header = TRUE, stringsAsFactors = FALSE, sep = "\t", 
- quote = "", fill = TRUE)
+if (msigdbversion == "latest") {
+ chip <- read.table(url(paste0("https://data.broadinstitute.org/gsea-msigdb/msigdb/annotations_versioned/Human_NCBI_Entrez_Gene_ID_MSigDB.", 
+  versionquery, ".chip")), header = TRUE, stringsAsFactors = FALSE, sep = "\t", 
+  quote = "", fill = TRUE, na = "")
+} else {
+ chip <- read.table(url(paste0("https://data.broadinstitute.org/gsea-msigdb/msigdb/annotations_versioned/Human_NCBI_Entrez_Gene_ID_MSigDB.v", 
+  msigdbversion, ".chip")), header = TRUE, stringsAsFactors = FALSE, sep = "\t", 
+  quote = "", fill = TRUE, na = "")
+}
 chip <- chip[, -c(3)]
 mappeddata <- merge(x = chip, y = data, by.x = 1, by.y = 1, all = FALSE, no.dups = FALSE)
 # ezid_lookup <- mappeddata[mappeddata$Gene.Symbol==symbol_mapped,][,c(1)]
