@@ -41,9 +41,9 @@ output <- paste0(c("TCGA", tcgasamples, symbol_query, "HIGH_stdev_greater_than",
  threshold_pos, "vs", "LOW_stdev_less_than_neg", abs(threshold_neg)), collapse = "_")
 
 if (msigdbversion == "latest") {
- versionquery <- readLines("https://software.broadinstitute.org/cancer/software/gsea/wiki/index.php/MSigDB_Latest_Release_Notes")
- versionquery <- strsplit(versionquery[grep(pattern = "<title>", versionquery)], 
-  " ")
+ versionquery <- readLines("http://msigdb.org")
+ versionquery <- strsplit(versionquery[grep(pattern = "<h1 class=\"msigdbhome\">", versionquery)], 
+  " |<|>")
  versionquery <- versionquery[[1]][grep(pattern = "v[0-9]\\.[0-9]", versionquery[[1]])]
  symbolchip <- read.table(url(paste0("https://data.broadinstitute.org/gsea-msigdb/msigdb/annotations_versioned/Human_Gene_Symbol_with_Remapping_MSigDB.", 
   versionquery, ".chip")), header = TRUE, stringsAsFactors = FALSE, sep = "\t", 
