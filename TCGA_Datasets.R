@@ -42,13 +42,13 @@ output <- paste0(c("TCGA", tcgasamples, symbol_query, "HIGH_stdev_greater_than",
 
 if (msigdbversion == "latest") {
  versionquery <- readLines("http://msigdb.org")
- versionquery <- strsplit(versionquery[grep(pattern = "<h1 class=\"msigdbhome\">", versionquery)], 
-  " |<|>")
+ versionquery <- strsplit(versionquery[grep(pattern = "<h1 class=\"msigdbhome\">", 
+  versionquery)], " |<|>")
  versionquery <- versionquery[[1]][grep(pattern = "v[0-9]\\.[0-9]", versionquery[[1]])]
- symbolchip <- read.table(url(paste0("https://data.broadinstitute.org/gsea-msigdb/msigdb/annotations_versioned/Human_Gene_Symbol_with_Remapping_MSigDB.", 
-  versionquery, ".chip")), header = TRUE, stringsAsFactors = FALSE, sep = "\t", 
-  quote = "", fill = TRUE, na = "")
-} else if (as.numeric(msigdbversion) >= 7.2) {
+ msigdbversion <- gsub("v", "", versionquery)
+}
+
+if (as.numeric(msigdbversion) >= 7.2) {
  symbolchip <- read.table(url(paste0("https://data.broadinstitute.org/gsea-msigdb/msigdb/annotations_versioned/Human_Gene_Symbol_with_Remapping_MSigDB.v", 
   msigdbversion, ".chip")), header = TRUE, stringsAsFactors = FALSE, sep = "\t", 
   quote = "", fill = TRUE, na = "")
@@ -98,15 +98,10 @@ if (data.type == "scaled_estimate") {
 names(data) = data[c(1), ]
 data <- data[-c(1, 2), ]
 
-if (msigdbversion == "latest") {
- chip <- read.table(url(paste0("https://data.broadinstitute.org/gsea-msigdb/msigdb/annotations_versioned/Human_NCBI_Entrez_Gene_ID_MSigDB.", 
-  versionquery, ".chip")), header = TRUE, stringsAsFactors = FALSE, sep = "\t", 
-  quote = "", fill = TRUE, na = "")
-} else {
- chip <- read.table(url(paste0("https://data.broadinstitute.org/gsea-msigdb/msigdb/annotations_versioned/Human_NCBI_Entrez_Gene_ID_MSigDB.v", 
-  msigdbversion, ".chip")), header = TRUE, stringsAsFactors = FALSE, sep = "\t", 
-  quote = "", fill = TRUE, na = "")
-}
+chip <- read.table(url(paste0("https://data.broadinstitute.org/gsea-msigdb/msigdb/annotations_versioned/Human_NCBI_Entrez_Gene_ID_MSigDB.v", 
+ msigdbversion, ".chip")), header = TRUE, stringsAsFactors = FALSE, sep = "\t", 
+ quote = "", fill = TRUE, na = "")
+
 chip <- chip[, -c(3)]
 mappeddata <- merge(x = chip, y = data, by.x = 1, by.y = 1, all = FALSE, no.dups = FALSE)
 # ezid_lookup <- mappeddata[mappeddata$Gene.Symbol==symbol_mapped,][,c(1)]
