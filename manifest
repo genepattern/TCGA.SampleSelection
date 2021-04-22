@@ -1,14 +1,14 @@
 #TCGA.SampleSelection
 #Thu Feb 25 19:28:34 UTC 2021
 JVMLevel=
-LSID=urn:lsid:genepattern.org:module.analysis:00417:0.1
+LSID=urn\:lsid\:8080.gpserver.ip-172-31-26-71.ip-172-31-26-71.ec2.internal\:genepatternmodules\:1947\:1.1
 author=Anthony S. Castanza;UCSD-MesirovLab
 categories=beta
 commandLine=<Rscript> <libdir>TCGA_Datasets.R --id <TCGA.Collection> --symbol <Gene.Symbol> --high <High.Expression> --low <Low.Expression> --type <Output.Type> --msigdb <MSigDB.Version>
 cpuType=any
 description=Preprocesses TCGA data (Broad Firehose) for ssGSEA/ssGSEA_ROC analysis.<br> Queries cBioPortal for TCGA samples meeting criteria of mRNA expression z-scores relative to all samples (log RNA Seq V2 RSEM) greater than and less than user supplied thresholds.<br> Outputs a GCT file containing TPM (Transcripts per Million) normalized RNA-seq quanitifcations suitable for ssGSEA, and a CLS file annotating samples as High or Low expression of the gene of interest.
 fileFormat=cls;gct
-job.docker.image=genepattern/tcga-sampleselection:beta
+job.docker.image=bioconductor/bioconductor_docker\:RELEASE_3_12
 language=any
 name=TCGA.SampleSelection
 os=any
@@ -81,7 +81,7 @@ p5_type=java.lang.String
 p5_value=scaled_estimate\=TPM;raw_count\=Raw Counts
 p6_MODE=
 p6_TYPE=TEXT
-p6_default_value=latest
+p6_default_value=7.3
 p6_description=MSigDB version to use for Gene Symbol lookup.<br>\nThis version should match the version of the gene sets intended for all downstream analysis. 
 p6_fileFormat=
 p6_flag=--msigdb
@@ -93,8 +93,8 @@ p6_prefix_when_specified=
 p6_type=java.lang.String
 p6_value=
 privacy=public
-quality=preproduction
+quality=development
 taskDoc=TCGA.SampleSelection.pdf
 taskType=beta
 userid=acastanza
-version= pulled in fix for chip file location based on version
+version=
