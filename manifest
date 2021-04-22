@@ -3,13 +3,13 @@
 JVMLevel=
 LSID=urn:lsid:genepattern.org:module.analysis:00417:0.5
 author=Anthony S. Castanza;UCSD-MesirovLab
-categories=beta
+categories=preprocess & utilities;beta
 commandLine=<Rscript> <libdir>TCGA_Datasets.R --id <TCGA.Collection> --symbol <Gene.Symbol> --high <High.Expression> --low <Low.Expression> --type <Output.Type> --msigdb <MSigDB.Version>
 cpuType=any
 description=Preprocesses TCGA data (Broad Firehose) for ssGSEA/ssGSEA_ROC analysis.<br> Queries cBioPortal for TCGA samples meeting criteria of mRNA expression z-scores relative to all samples (log RNA Seq V2 RSEM) greater than and less than user supplied thresholds.<br> Outputs a GCT file containing TPM (Transcripts per Million) normalized RNA-seq quanitifcations suitable for ssGSEA, and a CLS file annotating samples as High or Low expression of the gene of interest.
 fileFormat=cls;gct
 job.docker.image=genepattern/tcga-sampleselection:beta
-src.repo=https://github.com/genepattern/TCGA,SampleSelection/releases/tag/v0.5
+src.repo=https://github.com/genepattern/TCGA.SampleSelection/releases/tag/v0.5
 language=any
 name=TCGA.SampleSelection
 os=any
