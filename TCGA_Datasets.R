@@ -98,9 +98,15 @@ if (data.type == "scaled_estimate") {
 names(data) = data[c(1), ]
 data <- data[-c(1, 2), ]
 
-chip <- read.table(url(paste0("https://data.broadinstitute.org/gsea-msigdb/msigdb/annotations_versioned/Human_NCBI_Entrez_Gene_ID_MSigDB.v", 
- msigdbversion, ".chip")), header = TRUE, stringsAsFactors = FALSE, sep = "\t", 
- quote = "", fill = TRUE, na = "")
+if (as.numeric(msigdbversion) == 7.1 || as.numeric(msigdbversion) == 7.2) {
+ chip <- read.table(url(paste0("https://data.broadinstitute.org/gsea-msigdb/msigdb/annotations_versioned/Human_NCBI_Entrez_Gene_ID_MSigDB.v", 
+  msigdbversion, ".chip")), header = TRUE, stringsAsFactors = FALSE, sep = "\t", 
+  quote = "", fill = TRUE, na = "")
+} else {
+ chip <- read.table(url(paste0("https://data.broadinstitute.org/gsea-msigdb/msigdb/annotations_versioned/Human_NCBI_Gene_ID_MSigDB.v", 
+  msigdbversion, ".chip")), header = TRUE, stringsAsFactors = FALSE, sep = "\t", 
+  quote = "", fill = TRUE, na = "")
+}
 
 chip <- chip[, -c(3)]
 mappeddata <- merge(x = chip, y = data, by.x = 1, by.y = 1, all = FALSE, no.dups = FALSE)
