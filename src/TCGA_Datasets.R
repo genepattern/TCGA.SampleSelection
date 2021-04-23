@@ -1,18 +1,3 @@
-suppressMessages(suppressWarnings(install.packages("getopt", repos = "https://cloud.r-project.org/", 
- quiet = TRUE)))
-suppressMessages(suppressWarnings(install.packages("optparse", repos = "https://cloud.r-project.org/", 
- quiet = TRUE)))
-suppressMessages(suppressWarnings(library("getopt")))
-suppressMessages(suppressWarnings(library("optparse")))
-
-suppressMessages(suppressWarnings(BiocManager::install("cBioPortalData", ask = FALSE, 
- quiet = TRUE)))
-suppressMessages(suppressWarnings(BiocManager::install("AnVIL", ask = FALSE, quiet = TRUE)))
-suppressMessages(suppressWarnings(library("cBioPortalData")))
-suppressMessages(suppressWarnings(library("AnVIL")))
-# suppressMessages(suppressWarnings(install.packages('rapiclient', repos =
-# 'https://cloud.r-project.org/', quiet = TRUE))) library('rapiclient')
-
 arguments = commandArgs(trailingOnly = TRUE)
 
 option_list <- list(make_option("--id", dest = "id"), make_option("--symbol", dest = "symbol"), 
