@@ -3,6 +3,7 @@ suppressMessages(suppressWarnings(library("optparse")))
 suppressMessages(suppressWarnings(library("cBioPortalData")))
 suppressMessages(suppressWarnings(library("AnVIL")))
 
+sink(stdout(), type = "message")
 
 arguments = commandArgs(trailingOnly = TRUE)
 
