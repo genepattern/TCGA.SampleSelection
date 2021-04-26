@@ -1,3 +1,9 @@
+suppressMessages(suppressWarnings(library("getopt")))
+suppressMessages(suppressWarnings(library("optparse")))
+suppressMessages(suppressWarnings(library("cBioPortalData")))
+suppressMessages(suppressWarnings(library("AnVIL")))
+
+
 arguments = commandArgs(trailingOnly = TRUE)
 
 option_list <- list(make_option("--id", dest = "id"), make_option("--symbol", dest = "symbol"), 
