@@ -1,15 +1,15 @@
 #TCGA.SampleSelection
 #Thu Feb 25 19:28:34 UTC 2021
 JVMLevel=
-LSID=urn:lsid:genepattern.org:module.analysis:00417:0.8
+LSID=urn:lsid:genepattern.org:module.analysis:00417:0.9
 author=Anthony S. Castanza;UCSD-MesirovLab
 categories=preprocess & utilities;beta
-commandLine=<Rscript> <libdir>TCGA_Datasets.R --id <TCGA.Collection> --symbol <Gene.Symbol> --high <High.Expression> --low <Low.Expression> --type <Output.Type> --msigdb <MSigDB.Version>
+commandLine=Rscript /TCGA_SS/TCGA_Datasets.R --id <TCGA.Collection> --symbol <Gene.Symbol> --high <High.Expression> --low <Low.Expression> --type <Output.Type> --msigdb <MSigDB.Version>
 cpuType=any
 description=Retrieve TCGA data from Broad Firehose and perform sample selection on the basis of expression levels for specific genes of interest for analysis using GSEA tools.
 fileFormat=cls;gct
 job.docker.image=genepattern/tcga-sampleselection:beta
-src.repo=https://github.com/genepattern/TCGA.SampleSelection/releases/tag/v0.8
+src.repo=https://github.com/genepattern/TCGA.SampleSelection/releases/tag/v0.9
 language=any
 job.memory=4 Gb
 name=TCGA.SampleSelection
