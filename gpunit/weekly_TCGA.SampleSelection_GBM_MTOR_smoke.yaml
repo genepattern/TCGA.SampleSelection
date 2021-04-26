@@ -1,4 +1,4 @@
-#module: urn:lsid:genepattern.org:module.analysis:00417:0.5 - takes 18 minutes to run
+#module: urn:lsid:genepattern.org:module.analysis:00417:0.7 - takes 13 minutes to run
 module: TCGA.SampleSelection
 name: weekly_TCGA.SampleSelection_GBM_MTOR_smoke
 description: Positive test running with the 'latest' MSigDB version, TCGA GBM collection and using MTOR as the Gene Symbol for thresholding
