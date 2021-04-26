@@ -10,7 +10,7 @@ COPY lib/*.tar.gz /TCGA_SS/
 
 RUN Rscript /TCGA_SS/installPkgs.R
 
-# docker build --rm https://github.com/genepattern/TCGA.SampleSelection.git#develop -f Dockerfile -t genepattern/tcga-sampleselection:beta
+# docker build --rm https://github.com/genepattern/TCGA.SampleSelection.git#develop -f Dockerfile -t genepattern/tcga-sampleselection:<tag>
 # make sure this matches the manifest
 
 # docker run --rm -it --user rstudio -v /c/Users/MyUSER/PathTo/TCGA.SampleSelection:/mnt/mydata:rw genepattern/tcga-sampleselection:beta bash

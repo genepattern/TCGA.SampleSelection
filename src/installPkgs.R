@@ -1,5 +1,5 @@
-suppressMessages(suppressWarnings(install.packages("getopt_1.20.3.tar.gz")))
-suppressMessages(suppressWarnings(install.packages("optparse_1.6.6.tar.gz")))
+suppressMessages(suppressWarnings(install.packages("/TCGA_SS/getopt_1.20.3.tar.gz")))
+suppressMessages(suppressWarnings(install.packages("/TCGA_SS/optparse_1.6.6.tar.gz")))
 
 suppressMessages(suppressWarnings(library("getopt")))
 suppressMessages(suppressWarnings(library("optparse")))
