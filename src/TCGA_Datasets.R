@@ -49,8 +49,7 @@ if (as.numeric(msigdbversion) >= 7.2) {
   msigdbversion, ".chip")), header = TRUE, stringsAsFactors = FALSE, sep = "\t", 
   quote = "", fill = TRUE, na = "")
 } else if (as.numeric(msigdbversion) < 7.1) {
- message(paste0("Error: MSigDB Version ", msigdbversion, " is not supported. Please try a newer version."))
- stop()
+ stop(paste0("MSigDB Version ", msigdbversion, " is not supported. Please try a newer version."))
 }
 symbolchip <- symbolchip[, -c(3)]
 
@@ -59,6 +58,10 @@ if (length(symbol_mapped) > 1) {
  message("Error: More than one possible mapping was detected for selected gene in the TCGA Dataset")
  print(symbol_mapped)
  stop()
+}
+
+if (length(symbol_mapped) == 0) {
+stop(paste0("The symbol \"", opt$symbol, "\" was not recognised as a valid gene."))
 }
 
 temp <- tempfile()
@@ -138,6 +141,15 @@ sample_neg <- names(mappedcbioassay)[mappedcbioassay[mappedcbioassay$Gene.Symbol
  symbol_mapped, ] <= as.numeric(threshold_neg)]
 sample_neg <- sample_neg[sample_neg != "Gene.Symbol"]
 
+if (length(sample_pos) == 0) {
+ if (length(sample_neg) == 0) {
+  stop(paste0("No samples were selected for either condition."))
+ }
+ stop(paste0("No samples were selected for the positive condition."))
+}
+if (length(sample_neg) == 0) {
+ stop(paste0("No samples were selected for the negative condition."))
+}
 
 matches_pos <- unique(grep(paste(sample_pos, collapse = "|"), allnames, value = TRUE))
 matches_neg <- unique(grep(paste(sample_neg, collapse = "|"), allnames, value = TRUE))
