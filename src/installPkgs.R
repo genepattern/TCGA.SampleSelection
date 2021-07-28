@@ -5,9 +5,7 @@ suppressMessages(suppressWarnings(install.packages("/TCGA_SS/optparse_1.6.6.tar.
 # suppressMessages(suppressWarnings(install.packages("/TCGA_SS/tidyselect_1.1.1.tar.gz")))
 # suppressMessages(suppressWarnings(install.packages("/TCGA_SS/pillar_1.6.1.tar.gz")))
 # suppressMessages(suppressWarnings(install.packages("/TCGA_SS/dplyr_1.0.7.tar.gz")))
-suppressMessages(suppressWarnings(install.packages("BiocManager")))
-# ^^ on its own this grabbed 1.30.12
-#suppressMessages(suppressWarnings(install.packages("/TCGA_SS/BiocManager_1.30.15.tar.gz")))
+suppressMessages(suppressWarnings(install.packages("/TCGA_SS/BiocManager_1.30.12.tar.gz")))
 
 suppressMessages(suppressWarnings(BiocManager::install("AnVIL", version = "3.12", ask = FALSE)))
 # 1.2.1, from Bioconductor v3.12
