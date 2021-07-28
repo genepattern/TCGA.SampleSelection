@@ -15,7 +15,10 @@ USER gpuser
 COPY src/*.R /TCGA_SS/
 COPY lib/*.tar.gz /TCGA_SS/
 
+USER root
 RUN Rscript /TCGA_SS/installPkgs.R
+
+USER gpuser
 
 # docker build --rm https://github.com/genepattern/TCGA.SampleSelection.git#develop -f Dockerfile -t genepattern/tcga-sampleselection:<tag>
 # make sure this matches the manifest
