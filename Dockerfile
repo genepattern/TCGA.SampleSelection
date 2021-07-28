@@ -8,7 +8,7 @@ RUN apt update \
     #&& apt install -y zlib1g-dev=1:1.2.11.dfsg-2ubuntu1.2
     && apt install -y libcurl4-openssl-dev=7.68.0-1ubuntu2.6 \
     && apt install -y libbz2-dev=1.0.8-2 \
-    && apt install -y liblzma-dev 5.2.4-1ubuntu1
+    && apt install -y liblzma-dev=5.2.4-1ubuntu1
 
 RUN useradd -ms /bin/bash gpuser
 USER gpuser
