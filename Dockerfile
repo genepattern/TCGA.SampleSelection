@@ -1,5 +1,7 @@
 ### copyright 2017-2021 Regents of the University of California and the Broad Institute. All rights reserved.
-FROM bioconductor/bioconductor_docker:RELEASE_3_12
+FROM rocker/r-ver:4.0.4
+
+MAINTAINER Barbara Hill <bhill@broadinstitute.org>
 
 RUN mkdir /TCGA_SS \
     && chown rstudio /TCGA_SS
