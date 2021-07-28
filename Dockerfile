@@ -3,6 +3,10 @@ FROM rocker/r-ver:4.0.4
 
 MAINTAINER Barbara Hill <bhill@broadinstitute.org>
 
+RUN apt update \
+    && apt install -y git=1:2.25.1-1ubuntu3.1 \
+    && apt install -y zlib1g-dev=1:1.2.11.dfsg-2ubuntu1.2
+
 RUN useradd -ms /bin/bash gpuser
 USER gpuser
 WORKDIR /home/gpuser
@@ -23,4 +27,4 @@ USER gpuser
 # docker build --rm https://github.com/genepattern/TCGA.SampleSelection.git#develop -f Dockerfile -t genepattern/tcga-sampleselection:<tag>
 # make sure this matches the manifest
 
-# docker run --rm -it --user rstudio -v /c/Users/MyUSER/PathTo/TCGA.SampleSelection:/mnt/mydata:rw genepattern/tcga-sampleselection:beta bash
+# docker run --rm -it --user gpuser -v /c/Users/MyUSER/PathTo/TCGA.SampleSelection:/mnt/mydata:rw genepattern/tcga-sampleselection:beta3 bash

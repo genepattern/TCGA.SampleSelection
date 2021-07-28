@@ -2,7 +2,7 @@ suppressMessages(suppressWarnings(library("getopt")))
 suppressMessages(suppressWarnings(library("optparse")))
 suppressMessages(suppressWarnings(library("cBioPortalData")))
 suppressMessages(suppressWarnings(library("AnVIL")))
-suppressMessages(suppressWarnings(library("dplyr")))
+#suppressMessages(suppressWarnings(library("dplyr")))
 
 sink(stdout(), type = "message")
 
