@@ -1,5 +1,6 @@
 suppressMessages(suppressWarnings(install.packages("/TCGA_SS/getopt_1.20.3.tar.gz")))
 suppressMessages(suppressWarnings(install.packages("/TCGA_SS/optparse_1.6.6.tar.gz")))
+suppressMessages(suppressWarnings(install.packages("/TCGA_SS/dplyr_1.0.7.tar.gz")))
 
 suppressMessages(suppressWarnings(BiocManager::install("cBioPortalData", version = "3.12", ask = FALSE, quiet = TRUE)))
 # 2.2.11, from Bioconductor v3.12
