@@ -4,7 +4,7 @@ suppressMessages(suppressWarnings(install.packages("/TCGA_SS/optparse_1.6.6.tar.
 # suppressMessages(suppressWarnings(install.packages("/TCGA_SS/tidyselect_1.1.1.tar.gz")))
 # suppressMessages(suppressWarnings(install.packages("/TCGA_SS/pillar_1.6.1.tar.gz")))
 # suppressMessages(suppressWarnings(install.packages("/TCGA_SS/dplyr_1.0.7.tar.gz")))
-suppressMessages(suppressWarnings(install.packages("/TCGA_SS/BiocManager_1.30.15.tar.gz", quiet = TRUE)))
+suppressMessages(suppressWarnings(install.packages("/TCGA_SS/BiocManager_1.30.15.tar.gz")))
 
 suppressMessages(suppressWarnings(BiocManager::install("cBioPortalData", version = "3.12", ask = FALSE, quiet = TRUE)))
 # 2.2.11, from Bioconductor v3.12
