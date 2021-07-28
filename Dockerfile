@@ -3,10 +3,15 @@ FROM rocker/r-ver:4.0.4
 
 MAINTAINER Barbara Hill <bhill@broadinstitute.org>
 
-RUN mkdir /TCGA_SS \
-    && chown rstudio /TCGA_SS
+RUN useradd -ms /bin/bash gpuser
+USER gpuser
+WORKDIR /home/gpuser
 
-USER rstudio
+USER root
+RUN mkdir /TCGA_SS \
+    && chown gpuser /TCGA_SS
+
+USER gpuser
 COPY src/*.R /TCGA_SS/
 COPY lib/*.tar.gz /TCGA_SS/
 
