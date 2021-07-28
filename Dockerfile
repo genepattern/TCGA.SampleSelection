@@ -14,7 +14,6 @@ RUN apt update \
 RUN useradd -ms /bin/bash gpuser
 USER gpuser
 WORKDIR /home/gpuser
-#sudo adduser <user> staff
 
 USER root
 RUN mkdir /TCGA_SS \
@@ -32,4 +31,4 @@ USER gpuser
 # docker build --rm https://github.com/genepattern/TCGA.SampleSelection.git#develop -f Dockerfile -t genepattern/tcga-sampleselection:<tag>
 # make sure this matches the manifest
 
-# docker run --rm -it --user gpuser -v /c/Users/MyUSER/PathTo/TCGA.SampleSelection:/mnt/mydata:rw genepattern/tcga-sampleselection:beta3 bash
+# docker run --rm -it --user gpuser -v /c/Users/MyUSER/PathTo/TCGA.SampleSelection:/mnt/mydata:rw genepattern/tcga-sampleselection:beta bash
