@@ -2,6 +2,7 @@ suppressMessages(suppressWarnings(library("getopt")))
 suppressMessages(suppressWarnings(library("optparse")))
 suppressMessages(suppressWarnings(library("cBioPortalData")))
 suppressMessages(suppressWarnings(library("AnVIL")))
+#suppressMessages(suppressWarnings(library("dplyr")))
 
 sink(stdout(), type = "message")
 
@@ -62,6 +63,10 @@ if (length(symbol_mapped) > 1) {
 
 if (length(symbol_mapped) == 0) {
 stop(paste0("The symbol \"", opt$symbol, "\" was not recognised as a valid gene."))
+} else if (length(symbol_mapped) == 1) {
+print(paste0("The symbol \"", opt$symbol, "\" was recognised as a valid gene: ", symbol_mapped))
+} else {
+stop(paste0("An error was encountered with the mapping of \"", opt$symbol, "\" to valid gene symbols: ", symbol_mapped))
 }
 
 temp <- tempfile()
@@ -117,6 +122,7 @@ mappeddata[is.na(mappeddata)] <- 0
 mappeddata <- mappeddata %>% group_by(.data$Gene.Symbol) %>% summarise_all(sum) %>% 
  data.frame()
 
+print(paste0("Unfiltered dataset contains ", ncol(mappeddata)-1, " samples."))
 
 # Retrieve Sample Expression Thresholding Information from cBioPortal
 
@@ -124,7 +130,7 @@ cbiodata <- suppressMessages(suppressWarnings(cBioDataPack(cbiosamples, ask = FA
 assays <- assays(cbiodata)
 cbioassay <- assays[[assay]]
 cbioassay <- as.data.frame(cbind(rownames(cbioassay), cbioassay), stringsAsFactors = FALSE)
-mappedcbioassay <- merge(x = symbolchip, y = cbioassay, by.x = 1, by.y = 1, all = FALSE, 
+mappedcbioassay <- merge(x = chip, y = cbioassay, by.x = 1, by.y = 1, all = FALSE, 
  no.dups = FALSE)
 mappedcbioassay <- mappedcbioassay[, -c(1)]
 mappedcbioassay[, c(2:ncol(mappedcbioassay))] <- sapply(mappedcbioassay[, c(2:ncol(mappedcbioassay))], 
@@ -150,6 +156,10 @@ if (length(sample_pos) == 0) {
 if (length(sample_neg) == 0) {
  stop(paste0("No samples were selected for the negative condition."))
 }
+
+print(paste0("Samples selected for the positive condition: ", length(sample_pos)))
+print(paste0("Samples selected for the negative condition: ", length(sample_neg)))
+print(paste0("Total samples selected: ", length(sample_pos)+length(sample_neg)))
 
 matches_pos <- unique(grep(paste(sample_pos, collapse = "|"), allnames, value = TRUE))
 matches_neg <- unique(grep(paste(sample_neg, collapse = "|"), allnames, value = TRUE))
