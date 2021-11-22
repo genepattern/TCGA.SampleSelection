@@ -22,7 +22,9 @@ threshold_pos = as.numeric(opt$high)
 threshold_neg = (-1) * abs(as.numeric(opt$low))
 data.type = as.character(opt$type)
 msigdbversion = as.character(opt$msigdb)
-assay = "RNA_Seq_v2_mRNA_median_all_sample_Zscores"  #linear_CNA could also work
+assay = "RNA_Seq_v2_mRNA_median_all_sample_Zscores"  #linear_CNA could also work # Original assay name
+alt_assay = "mrna_seq_v2_rsem_zscores_ref_all_samples" # Assay was renamed for some reason in November 2021, this is the new name. Script will check for the old name first then fall back to this in case the change is reverted.
+
 set.seed(147)
 
 cbiosamples <- paste0(tolower(tcgasamples), "_tcga")
@@ -129,6 +131,9 @@ print(paste0("Unfiltered dataset contains ", ncol(mappeddata)-1, " samples."))
 cbiodata <- suppressMessages(suppressWarnings(cBioDataPack(cbiosamples, ask = FALSE)))
 assays <- assays(cbiodata)
 cbioassay <- assays[[assay]]
+if (is.null(cbioassay)) {
+ cbioassay <- assays[[alt_assay]]
+}
 cbioassay <- as.data.frame(cbind(rownames(cbioassay), cbioassay), stringsAsFactors = FALSE)
 mappedcbioassay <- merge(x = chip, y = cbioassay, by.x = 1, by.y = 1, all = FALSE, 
  no.dups = FALSE)
