@@ -13,6 +13,6 @@ assertions:
     jobStatus: success
     files:
         TCGA_GBM_MTOR_HIGH_stdev_greater_than_1_vs_LOW_stdev_less_than_neg_1.cls:
-            diff: ./output/TCGA_GBM_MTOR_HIGH_stdev_greater_than_1_vs_LOW_stdev_less_than_neg_1_latest7.4.cls
+            diff: ./output/TCGA_GBM_MTOR_HIGH_stdev_greater_than_1_vs_LOW_stdev_less_than_neg_1_latest7.5.cls
         TCGA_GBM_MTOR_HIGH_stdev_greater_than_1_vs_LOW_stdev_less_than_neg_1.TPM.gct:
-            diff: ./output/TCGA_GBM_MTOR_HIGH_stdev_greater_than_1_vs_LOW_stdev_less_than_neg_1_latest7.4.TPM.gct
+            diff: ./output/TCGA_GBM_MTOR_HIGH_stdev_greater_than_1_vs_LOW_stdev_less_than_neg_1_latest7.5.TPM.gct
