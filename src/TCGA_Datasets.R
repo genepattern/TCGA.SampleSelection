@@ -42,16 +42,18 @@ if (msigdbversion == "latest") {
  versionquery <- versionquery[[1]][grep(pattern = "v[0-9]\\.[0-9]", versionquery[[1]])]
  msigdbversion <- gsub("v", "", versionquery)
 }
+msigdbshortversion = strsplit(msigdbversion, "\\.")[[1
+msigdbshortversion = as.numeric(paste0(msigdbshortversion[1],".",msigdbshortversion[2]))
 
-if (as.numeric(msigdbversion) >= 7.2) {
+if (as.numeric(msigdbshortversion) >= 7.2) {
  symbolchip <- read.table(url(paste0("https://data.broadinstitute.org/gsea-msigdb/msigdb/annotations_versioned/Human_Gene_Symbol_with_Remapping_MSigDB.v", 
   msigdbversion, ".chip")), header = TRUE, stringsAsFactors = FALSE, sep = "\t", 
   quote = "", fill = TRUE, na = "")
-} else if (as.numeric(msigdbversion) == 7.1) {
+} else if (as.numeric(msigdbshortversion) == 7.1) {
  symbolchip <- read.table(url(paste0("https://data.broadinstitute.org/gsea-msigdb/msigdb/annotations_versioned/Human_Symbol_with_Remapping_MSigDB.v", 
   msigdbversion, ".chip")), header = TRUE, stringsAsFactors = FALSE, sep = "\t", 
   quote = "", fill = TRUE, na = "")
-} else if (as.numeric(msigdbversion) < 7.1) {
+} else if (as.numeric(msigdbshortversion) < 7.1) {
  stop(paste0("MSigDB Version ", msigdbversion, " is not supported. Please try a newer version."))
 }
 symbolchip <- symbolchip[, -c(3)]
@@ -100,7 +102,7 @@ if (data.type == "scaled_estimate") {
 names(data) = data[c(1), ]
 data <- data[-c(1, 2), ]
 
-if (as.numeric(msigdbversion) == 7.1 || as.numeric(msigdbversion) == 7.2) {
+if (as.numeric(msigdbshortversion) == 7.1 || as.numeric(msigdbshortversion) == 7.2) {
  chip <- read.table(url(paste0("https://data.broadinstitute.org/gsea-msigdb/msigdb/annotations_versioned/Human_NCBI_Entrez_Gene_ID_MSigDB.v", 
   msigdbversion, ".chip")), header = TRUE, stringsAsFactors = FALSE, sep = "\t", 
   quote = "", fill = TRUE, na = "")
