@@ -42,7 +42,7 @@ if (msigdbversion == "latest") {
  versionquery <- versionquery[[1]][grep(pattern = "v[0-9]\\.[0-9]", versionquery[[1]])]
  msigdbversion <- gsub("v", "", versionquery)
 }
-msigdbshortversion = strsplit(msigdbversion, "\\.")[[1
+msigdbshortversion = strsplit(msigdbversion, "\\.")[[1]]
 msigdbshortversion = as.numeric(paste0(msigdbshortversion[1],".",msigdbshortversion[2]))
 
 if (as.numeric(msigdbshortversion) >= 7.2) {
