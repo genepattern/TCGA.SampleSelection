@@ -197,7 +197,7 @@ if (symbol_mapped != "none") {
  write.table(paste(clslabels, collapse = " "), paste0(output, ".cls"), sep = "\t",
   row.names = FALSE, col.names = FALSE, quote = FALSE, append = TRUE)
 } else {
- restricted <- mappeddata[mappeddata != "Gene.Symbol"]
+ restricted <- mappeddata[, names(mappeddata) != "Gene.Symbol"]
 }
 
 matrix <- as.data.frame(cbind(NAME = mappeddata[, c(1)], Description = mappeddata[,
