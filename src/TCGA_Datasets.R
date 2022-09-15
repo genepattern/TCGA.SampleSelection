@@ -1,7 +1,7 @@
 suppressMessages(suppressWarnings(library("getopt")))
 suppressMessages(suppressWarnings(library("optparse")))
-suppressMessages(suppressWarnings(library("cBioPortalData")))
 suppressMessages(suppressWarnings(library("AnVIL")))
+suppressMessages(suppressWarnings(library("cBioPortalData")))
 # suppressMessages(suppressWarnings(library('dplyr')))
 
 sink(stdout(), type = "message")
@@ -34,26 +34,30 @@ dataset = paste0("http://gdac.broadinstitute.org/runs/stddata__2016_01_28/data/"
  tcgasamples, "/20160128/gdac.broadinstitute.org_", tcgasamples, ".Merge_rnaseqv2__illuminahiseq_rnaseqv2__unc_edu__Level_3__RSEM_genes__data.Level_3.2016012800.0.0.tar.gz")
 
 if (msigdbversion == "latest") {
- versionquery <- readLines("http://msigdb.org")
- versionquery <- strsplit(versionquery[grep(pattern = "<h1 class=\"msigdbhome\">",
-  versionquery)], " |<|>")
- versionquery <- versionquery[[1]][grep(pattern = "v[0-9]\\.[0-9]", versionquery[[1]])]
- msigdbversion <- gsub("v", "", versionquery)
+ versionquery <- readLines("https://software.broadinstitute.org/cancer/software/gsea/wiki/index.php/Version_check")
+ versionquery <- strsplit(versionquery[grep(pattern = "TCGA_SampleSelection",
+  versionquery)], ": ")
+ msigdbversion <- versionquery[[1]][2]
 }
 msigdbshortversion = strsplit(msigdbversion, "\\.")[[1]]
 msigdbshortversion = as.numeric(paste0(msigdbshortversion[1], ".", msigdbshortversion[2]))
 
-if (as.numeric(msigdbshortversion) >= 7.2) {
- symbolchip <- read.table(url(paste0("https://data.broadinstitute.org/gsea-msigdb/msigdb/annotations_versioned/Human_Gene_Symbol_with_Remapping_MSigDB.v",
-  msigdbversion, ".chip")), header = TRUE, stringsAsFactors = FALSE, sep = "\t",
-  quote = "", fill = TRUE, na = "")
+if (as.numeric(msigdbshortversion) < 7.1) {
+ stop(paste0("MSigDB Version ", msigdbversion, " is not supported. Please try a newer version."))
 } else if (as.numeric(msigdbshortversion) == 7.1) {
  symbolchip <- read.table(url(paste0("https://data.broadinstitute.org/gsea-msigdb/msigdb/annotations_versioned/Human_Symbol_with_Remapping_MSigDB.v",
   msigdbversion, ".chip")), header = TRUE, stringsAsFactors = FALSE, sep = "\t",
   quote = "", fill = TRUE, na = "")
-} else if (as.numeric(msigdbshortversion) < 7.1) {
- stop(paste0("MSigDB Version ", msigdbversion, " is not supported. Please try a newer version."))
+} else if (as.numeric(msigdbshortversion) >= 7.2 && as.numeric(msigdbshortversion) <= 2022) {
+ symbolchip <- read.table(url(paste0("https://data.broadinstitute.org/gsea-msigdb/msigdb/annotations_versioned/Human_Gene_Symbol_with_Remapping_MSigDB.v",
+  msigdbversion, ".chip")), header = TRUE, stringsAsFactors = FALSE, sep = "\t",
+  quote = "", fill = TRUE, na = "")
+} else {
+ symbolchip <- read.table(url(paste0("https://data.broadinstitute.org/gsea-msigdb/msigdb/annotations/human/Human_Gene_Symbol_with_Remapping_MSigDB.v",
+  msigdbversion, ".chip")), header = TRUE, stringsAsFactors = FALSE, sep = "\t",
+  quote = "", fill = TRUE, na = "")
 }
+
 symbolchip <- symbolchip[, -c(3)]
 
 if (symbol_query != "none") {
@@ -114,8 +118,12 @@ if (as.numeric(msigdbshortversion) == 7.1 || as.numeric(msigdbshortversion) == 7
  chip <- read.table(url(paste0("https://data.broadinstitute.org/gsea-msigdb/msigdb/annotations_versioned/Human_NCBI_Entrez_Gene_ID_MSigDB.v",
   msigdbversion, ".chip")), header = TRUE, stringsAsFactors = FALSE, sep = "\t",
   quote = "", fill = TRUE, na = "")
-} else {
+} else if as.numeric(msigdbshortversion) < 2022 {
  chip <- read.table(url(paste0("https://data.broadinstitute.org/gsea-msigdb/msigdb/annotations_versioned/Human_NCBI_Gene_ID_MSigDB.v",
+  msigdbversion, ".chip")), header = TRUE, stringsAsFactors = FALSE, sep = "\t",
+  quote = "", fill = TRUE, na = "")
+} else {
+ chip <- read.table(url(paste0("https://data.broadinstitute.org/gsea-msigdb/msigdb/annotations/human/Human_NCBI_Gene_ID_MSigDB.v",
   msigdbversion, ".chip")), header = TRUE, stringsAsFactors = FALSE, sep = "\t",
   quote = "", fill = TRUE, na = "")
 }
