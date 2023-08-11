@@ -129,6 +129,7 @@ if (as.numeric(msigdbshortversion) == 7.1 || as.numeric(msigdbshortversion) == 7
 }
 
 chip <- chip[, -c(3)]
+
 mappeddata <- merge(x = chip, y = data, by.x = 1, by.y = 1, all = FALSE, no.dups = FALSE)
 # ezid_lookup <- mappeddata[mappeddata$Gene.Symbol==symbol_mapped,][,c(1)]
 # if(length(ezid_lookup) > 1) { message('More than one possible EntrezGeneID
@@ -155,7 +156,7 @@ if (is.null(cbioassay)) {
  cbioassay <- assays[[alt_assay]]
 }
 cbioassay <- as.data.frame(cbind(rownames(cbioassay), cbioassay), stringsAsFactors = FALSE)
-mappedcbioassay <- merge(x = chip, y = cbioassay, by.x = 1, by.y = 1, all = FALSE,
+mappedcbioassay <- merge(x = symbolchip, y = cbioassay, by.x = 1, by.y = 1, all = FALSE,
  no.dups = FALSE)
 mappedcbioassay <- mappedcbioassay[, -c(1)]
 mappedcbioassay[, c(2:ncol(mappedcbioassay))] <- sapply(mappedcbioassay[, c(2:ncol(mappedcbioassay))],
