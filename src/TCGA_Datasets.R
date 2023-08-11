@@ -118,7 +118,7 @@ if (as.numeric(msigdbshortversion) == 7.1 || as.numeric(msigdbshortversion) == 7
  chip <- read.table(url(paste0("https://data.broadinstitute.org/gsea-msigdb/msigdb/annotations_versioned/Human_NCBI_Entrez_Gene_ID_MSigDB.v",
   msigdbversion, ".chip")), header = TRUE, stringsAsFactors = FALSE, sep = "\t",
   quote = "", fill = TRUE, na = "")
-} else if as.numeric(msigdbshortversion) < 2022 {
+} else if (as.numeric(msigdbshortversion) < 2022) {
  chip <- read.table(url(paste0("https://data.broadinstitute.org/gsea-msigdb/msigdb/annotations_versioned/Human_NCBI_Gene_ID_MSigDB.v",
   msigdbversion, ".chip")), header = TRUE, stringsAsFactors = FALSE, sep = "\t",
   quote = "", fill = TRUE, na = "")
