@@ -4,12 +4,12 @@ FROM rocker/r-ver:4.0.4
 MAINTAINER Barbara Hill <bhill@broadinstitute.org>
 
 RUN apt update \
-    && apt install -y git=1:2.25.1-1ubuntu3.2 \
-    && apt install -y zlib1g-dev=1:1.2.11.dfsg-2ubuntu1.2 \
-    && apt install -y libcurl4-openssl-dev=7.68.0-1ubuntu2.7 \
+    && apt install -y git=1:2.25.1-1ubuntu3.11 \
+    && apt install -y zlib1g-dev=1:1.2.11.dfsg-2ubuntu1.5 \
+    && apt install -y libcurl4-openssl-dev=7.68.0-1ubuntu2.19 \
     && apt install -y libbz2-dev=1.0.8-2 \
-    && apt install -y liblzma-dev=5.2.4-1ubuntu1 \
-    && apt install -y libxml2-dev=2.9.10+dfsg-5ubuntu0.20.04.1
+    && apt install -y liblzma-dev=5.2.4-1ubuntu1.1 \
+    && apt install -y libxml2-dev=2.9.10+dfsg-5ubuntu0.20.04.6
 
 RUN useradd -ms /bin/bash gpuser
 USER gpuser
