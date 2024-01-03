@@ -3,7 +3,7 @@
 JVMLevel=
 LSID=urn:lsid:genepattern.org:module.analysis:00417
 author=Anthony S. Castanza;UCSD-MesirovLab
-categories=preprocess & utilities;beta;gsea
+categories=preprocess & utilities;gsea
 commandLine=Rscript /TCGA_SS/TCGA_Datasets.R --id <TCGA.Collection> --symbol <Gene.Symbol> --high <High.Expression> --low <Low.Expression> --type <Output.Type> --msigdb <MSigDB.Version>
 cpuType=any
 description=Retrieve TCGA data from Broad FireBrowse and perform sample selection on the basis of expression levels for specific genes of interest for analysis using GSEA tools.
